@@ -33,6 +33,9 @@ const useStorage = () => {
                 return (password !== item)
             })
 
+            await AsincStorage.setItem(key, JSON.stringify(myPasswords))
+            return myPasswords;
+
         }catch(error){
             console.log("ERROR AO DELETAR", error)
         }

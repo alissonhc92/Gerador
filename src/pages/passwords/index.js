@@ -1,11 +1,14 @@
 
 import { View, Text, StyleShet } from 'react-native'
+import { SafeAreaView } from 'react-native-safe-area-content'
 
 export function Passwords(){
     return(
-        <View>
-            <Text>Minhas senhas</Text>
-        </View>
+        <SafeAreaView>
+            <View>
+                <Text>Minhas senhas</Text>
+            </View>
+        </SafeAreaView>
     )
 }
 
