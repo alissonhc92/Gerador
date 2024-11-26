@@ -1,46 +1,47 @@
-
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
-import { Home } from './pages/home'
-import { Passwords } from './pages/passwords'
-import { Ionicons } from '@expo/vector-icons'
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { Home } from './pages/home';
+import { Passwords } from './pages/passwords';
+import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
 
-export function Routes(){
-    return(
-        <Tab.Navigator>
-            <tab.Screen
-                name='home'
+export function Routes() {
+    return (
+        <Tab.Navigator
+            screenOptions={{
+                tabBarShowLabel: false,
+                headerShown: false,
+                tabBarActiveTintColor: '#392de9',
+                tabBarInactiveTintColor: '#8e8e93',
+            }}
+        >
+            <Tab.Screen
+                name="Home"
                 component={Home}
                 options={{
-                    tabBarShowLabel: false,
-                    headerShown: false,
-                    tabBarIcon: ({ focused, size, color}) => {
-                        if(focused){
-                            return <Ionicons size={size} color={color} name='home' />
-                        }
-
-                        return <Ionicons size={size} color={color} name='home-outline' />
-                    }
+                    tabBarIcon: ({ focused, size, color }) => (
+                        <Ionicons
+                            size={size}
+                            color={color}
+                            name={focused ? 'home' : 'home-outline'}
+                        />
+                    ),
                 }}
             />
 
-            <Tab.Screen 
-                name="passwords"
+            <Tab.Screen
+                name="Passwords"
                 component={Passwords}
                 options={{
-                    tabBarShowLabel: false,
-                    headerShown:false,
-                    tabBarIcon: ({ focused, size, color}) => {
-                        if(focused){
-                            return <Ionicons size={size} color={color} name='lock-closed' />
-                        }
-
-                        return <Ionicons size={size} color={color} name='lock-closed-outline' />
-                    }
+                    tabBarIcon: ({ focused, size, color }) => (
+                        <Ionicons
+                            size={size}
+                            color={color}
+                            name={focused ? 'lock-closed' : 'lock-closed-outline'}
+                        />
+                    ),
                 }}
             />
-
         </Tab.Navigator>
-    )
+    );
 }

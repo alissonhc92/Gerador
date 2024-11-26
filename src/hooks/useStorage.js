@@ -1,52 +1,60 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const useStorage = () => {
-    const gatItem = async (key) => {
-        try{
-            const passwords = await AsyncStorage.getItem(key);
-            return JSON.parse(passwords) || [];
-        }catch(error){
-            console.log("Erro ao buscar", error)
-            return[];
+    // Recupera itens do AsyncStorage
+    const getItem = async (key) => {
+        try {
+            const storedData = await AsyncStorage.getItem(key);
+            return JSON.parse(storedData) || [];
+        } catch (error) {
+            console.error("Erro ao buscar itens:", error);
+            return [];
         }
-    }
+    };
 
+    // Salva um item no AsyncStorage
     const saveItem = async (key, value) => {
-        try{
-            let passwords = await getItem(key);
+        try {
+            if (!key || !value) throw new Error("Chave ou valor inválido!");
 
-            passwords.push(value)
+            // Recupera itens já salvos
+            let items = await getItem(key);
 
-            await AsyncStorage.steItem(key, JSON.stringfy(passwords))
+            // Adiciona o novo valor
+            items.push(value);
 
-        }catch(error){
-            console.log("ERRO AO SALVAR", error)
+            // Salva os itens atualizados
+            await AsyncStorage.setItem(key, JSON.stringify(items));
+        } catch (error) {
+            console.error("Erro ao salvar item:", error);
         }
+    };
 
-    }
+    // Remove um item do AsyncStorage
+    const removeItem = async (key, item) => {
+        try {
+            if (!key || !item) throw new Error("Chave ou item inválido!");
 
-    const removeItem = async () => {
-        try{
-            let passwords = await getItem(key);
+            // Recupera itens já salvos
+            let items = await getItem(key);
 
-            let myPasswords = passwords.filter( (password) => {
-                return (password !== item)
-            })
+            // Filtra itens diferentes do que será removido
+            let filteredItems = items.filter((storedItem) => storedItem !== item);
 
-            await AsincStorage.setItem(key, JSON.stringify(myPasswords))
-            return myPasswords;
+            // Salva os itens atualizados
+            await AsyncStorage.setItem(key, JSON.stringify(filteredItems));
 
-        }catch(error){
-            console.log("ERROR AO DELETAR", error)
+            return filteredItems;
+        } catch (error) {
+            console.error("Erro ao remover item:", error);
         }
-    }
+    };
 
-    return{
-        gatItem,
+    return {
+        getItem,
         saveItem,
         removeItem,
-    }
-}
-
+    };
+};
 
 export default useStorage;

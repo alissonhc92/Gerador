@@ -1,65 +1,74 @@
+import { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, FlatList } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { useIsFocused } from '@react-navigation/native';
+import useStorage from '../../useStorage';
+import { PasswordItem } from './components/passworditem';
 
-import { useState, useEffect } from 'react'
-import { View, Text, StyleShet, Flatlist } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-content'
-import { useIsFocused } from '@react-navigation/native'
-import useStorage from '../../useStorage'
-import { PasswordItem } from './components/passworditem'
-
-export function Passwords(){
-    const [listPasswords, setListPasswords] = useState([])
+export function Passwords() {
+    const [listPasswords, setListPasswords] = useState([]);
     const focused = useIsFocused();
     const { getItem, removeItem } = useStorage();
 
     useEffect(() => {
-        async function loadPasswords(){
-            const passwords = await getItem("@pass")
+        async function loadPasswords() {
+            const passwords = await getItem("@pass");
             setListPasswords(passwords);
         }
 
-        loadPasswords();
-    }, [focused])
+        if (focused) {
+            loadPasswords();
+        }
+    }, [focused]);
 
-    async function handlwDeeletePassword(item){
-        const passwords = await removeItem("@pass", item)
-        setListPasswords(passwords)
+    async function handleDeletePassword(item) {
+        const passwords = await removeItem("@pass", item);
+        setListPasswords(passwords);
     }
 
-    return(
-        <SafeAreaView style={{flwx:1, }}>
+    return (
+        <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.header}>
-                <Text style={styles.title}>Minhas senhas</Text>
+                <Text style={styles.title}>Minhas Senhas</Text>
             </View>
 
             <View style={styles.content}>
-                <Flatlist
-                    style={{ flex: 1, paddingTop: 14, }}
-                    data={listPassword}
-                    keyExtractor={ (item) => String(item) }
-                    rendeItem={ ({ item }) => <PasswordItem data={item} removePassword={ () => hendleDeletePassword(item) }/> }
-                />
+                {listPasswords.length === 0 ? (
+                    <Text style={{ textAlign: 'center', marginTop: 20 }}>Nenhuma senha salva.</Text>
+                ) : (
+                    <FlatList
+                        style={{ flex: 1, paddingTop: 14 }}
+                        data={listPasswords}
+                        keyExtractor={(item) => String(item)}
+                        renderItem={({ item }) => (
+                            <PasswordItem
+                                data={item}
+                                removePassword={() => handleDeletePassword(item)}
+                            />
+                        )}
+                    />
+                )}
             </View>
         </SafeAreaView>
-    )
+    );
 }
 
 const styles = StyleSheet.create({
-    header:{
+    header: {
         backgroundColor: "#392de9",
         paddingTop: 58,
         paddingBottom: 14,
         paddingLeft: 14,
         paddingRight: 14,
     },
-    title:{
+    title: {
         fontSize: 18,
         color: "#FFF",
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
-    content:{
-        flex:1,
+    content: {
+        flex: 1,
         paddingLeft: 14,
-        paddingRigth: 14,
-    }
-    
-})
+        paddingRight: 14,
+    },
+});
