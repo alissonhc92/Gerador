@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         width: '98%',
         marginTop: 8,
         alignItems: "center",
-        justifyContent: "space-between",
+        justifyContent: "space-evenly",
     },
     button: {
         flex: 1,
