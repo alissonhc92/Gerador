@@ -9,10 +9,12 @@ Sentry.init({
   // enableSpotlight: __DEV__,
 });
 
-export default function App() {
+function App() {
     return (
         <NavigationContainer>
             <Routes />
         </NavigationContainer>
     );
 }
+
+export default Sentry.wrap(App);

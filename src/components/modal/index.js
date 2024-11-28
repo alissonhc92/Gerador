@@ -59,25 +59,25 @@ const styles = StyleSheet.create({
     },
     title: {
         fontSize: 20,
-        fontWeight: "bold",
+        fontWeight: 'bold',
         color: "#000",
         marginBottom: 24,
     },
     innerPassword: {
         backgroundColor: "#0e0e0e",
-        width: '90%',
+        width: "90%",
         padding: 14,
         borderRadius: 8,
     },
     text: {
         color: "#FFF",
-        textAlign: "center",
+        textAlign: 'center',
     },
     buttonArea: {
         flexDirection: "row",
-        width: '98%',
+        width: "98%",
         marginTop: 8,
-        alignItems: "center",
+        alignItems: 'center',
         justifyContent: "space-evenly",
     },
     button: {

@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         borderRadius: 8,
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between',
+        justifyContent: "space-between",
     },
     text: {
         color: "#FFF",
